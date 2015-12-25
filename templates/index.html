@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="	{{ url_for('static', filename='nanobar.min.js') }}"></script>
+
+	<script src="{{ url_for('static', filename='jquery.js') }}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+
+	
+
+</head>
+<body>
+<div class="bg"></div>
+<div class="header">آیریس</div>
+<div class="content">
+	<ul>
+		<li class="pers">PERS</li>
+		<li class="loc">LOC</li>
+		<li class="org">ORG</li>
+		<li class="event">EVENT</li>
+		<li class="fac">FAC</li>
+		<li class="pro">PRO</li>
+		
+	</ul>
+	<textarea>چیزی بنویسید</textarea>
+	<div class="button"><button onclick="sendRequest()">SEND</button></div>
+	<p></p>
+</div>
+
+<div class="footer">Programmed By Arian Hosseini</div>
+
+</body>
+<script>
+	var options = {
+	bg: '#2980b9',
+
+	// leave target blank for global nanobar
+	target: document.getElementById('myDivId'),
+
+	// id for new nanobar
+	id: 'mynano'
+};
+	//$('button').hover(function(){
+	//	$(this).animate({'border-radius' : '50px',width : '40%'})
+	//},function(){$(this).animate({'border-radius' : '0px',width : '15%'})});
+	var nanobar = new Nanobar( options );
+
+	// move bar
+	function sendRequest(){
+		nanobar.go( 30 ); // size bar 30%	
+		var reqText = $('textarea').text();
+		console.log(reqText);
+		$.post("/ner",{text : reqText},function(data, status){
+			console.log("sending ...", data);
+			$('p').html(data) ;
+			nanobar.go(100);
+		});
+		
+	}
+	
+
+	// Finish progress bar
+	
+</script>
+</html>

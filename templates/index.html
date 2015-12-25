@@ -50,7 +50,7 @@
 	// move bar
 	function sendRequest(){
 		nanobar.go( 30 ); // size bar 30%	
-		var reqText = $('textarea').text();
+		var reqText = $('textarea').html();
 		console.log(reqText);
 		$.post("/ner",{text : reqText},function(data, status){
 			console.log("sending ...", data);

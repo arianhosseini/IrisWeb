@@ -15,7 +15,7 @@ tagger = POSTagger(model='resources/postagger.model')
 
 @app.route("/")
 def index():
-    print "hello"
+#    print "hello"
     return render_template('index.html', name="index")
 
 
@@ -23,16 +23,16 @@ def index():
 @app.route("/ner",methods=['POST'])
 def ner():
     if request.method == 'POST':        
-        print request.form['text'].decode('utf-8')
+        print(request.form['text'].encode('utf-8'))
         result = tagger.tag(word_tokenize(request.form['text']))
         outLine = ""
         for counter in range(len(result)-1):
             token = result[counter]
-            outLine += token[0].encode('utf-8') + "\t" + token[1] + "\n"
+            outLine += token[0] + "\t" + token[1] + "\n"
 
-        outLine += result[-1][0].encode('utf-8') + "\t" + result[-1][1]
-        tempFile = open('evalText.txt','w')
-        tempFile.write(outLine)
+        outLine += result[-1][0] + "\t" + result[-1][1]
+        tempFile = open(os.getcwd()+'/projectTemp/evalText.txt','wb')
+        tempFile.write(outLine.encode('utf-8'))
         tempFile.close()
         os.system("java -jar CoreNLP.jar")
         outputFile = open('result.txt','rb')
@@ -53,7 +53,7 @@ def ner():
                     word = splitedText[0]
             outText+= word +' '
 
-        print outText
+#        print(outText)
         return outText
 
 

@@ -23,7 +23,7 @@ def index():
 @app.route("/ner",methods=['POST'])
 def ner():
     if request.method == 'POST':        
-        print request.form['text']
+        print request.form['text'].decode('utf-8')
         result = tagger.tag(word_tokenize(request.form['text']))
         outLine = ""
         for counter in range(len(result)-1):

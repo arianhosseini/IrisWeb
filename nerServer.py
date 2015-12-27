@@ -38,23 +38,23 @@ def ner():
         outputFile = open('result.txt','rb')
         result = outputFile.read().decode('utf-8')
         outputFile.close()
-        tokens = result.split(' ')
+        tokens = result.split('\t')
         outText = ""
         for token in tokens:
             word = ""
             splitedText = token.split('/')
             if len(splitedText) > 1:
             #print splitedText[0]," ",splitedText[1]
-                if splitedText[1] != "O":
+                if splitedText[1] != "O" and splitedText[1] != "O\t":
                     tag = splitedText[1].split('_')
-                    #   print tag[1].lower()
+                    print(tag)
                     word = '<span class="'+ tag[1].lower() +'">' + splitedText[0] + '</span>'
                 else:
                     word = splitedText[0]
             outText+= word +' '
 
 #        print(outText)
-        return outText
+        return outText.encode('utf-8')
 
 
 if __name__ == "__main__":
